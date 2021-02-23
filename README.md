@@ -27,4 +27,4 @@ To run this toolchain you will need to install and compile OpenCV library. (Run 
 
 ### Install
     sudo make install
-    ldconfig
+    sudo ldconfig
