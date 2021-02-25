@@ -19,7 +19,7 @@ To run this toolchain you will need to install and compile OpenCV library. (Run 
 ### Create build directory and switch into it
     mkdir -p build && cd build
 ### Configure
-    cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-master/modules -DBUILD_LIST=quality ../opencv-master
+    cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-master/modules -DBUILD_LIST=core,highgui,imgproc,imgcodecs,quality,xphoto -DOPENCV_ENABLE_NONFREE:BOOL=ON ../opencv-master
 ### Build
 (you can speed up the compilation by increasing the number after -j, but it's limited by the number of processors)
 

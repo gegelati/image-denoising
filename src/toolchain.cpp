@@ -55,7 +55,7 @@ void Toolchain_denoise::changeCurrentImage()
 
 }
 
-Toolchain_denoise::Toolchain_denoise() : LearningEnvironment(7), currentImage(32 * 3, 32 ),img_before(32*32*3),nb_action_filtering(0),global_reward(0)
+Toolchain_denoise::Toolchain_denoise() : LearningEnvironment(8), currentImage(32 * 3, 32 ),img_before(32*32*3),nb_action_filtering(0),global_reward(0)
 {
 	// Fill shared dataset dataset(mnist::read_dataset<std::vector, std::vector, double, uint8_t>(MNIST_DATA_LOCATION))
 	if (Toolchain_denoise::dataset.training_labels.size() != 0) {
@@ -92,32 +92,35 @@ void Toolchain_denoise::doAction(uint64_t actionID)
         //Select the filter
         switch (actionID) {
             case 0:
-                toolkit::mean_filter_3x3(img, img);
-                break;
-            case 1:
-                toolkit::mean_filter_5x5(img, img);
-                break;
-            case 2:
-                toolkit::median_filter_3x3(img, img);
-                break;
-            case 3:
-                toolkit::median_filter_5x5(img, img);
-                break;
-            case 4:
-                toolkit::gaussian_filter_3x3(img, img);
-                break;
-            case 5:
-                toolkit::gaussian_filter_5x5(img, img);
-                break;
-            case 6:
                 this->changeCurrentImage();
                 this->nb_action_filtering = 0;
+                break;
+            case 1:
+                toolkit::mean_filter_3x3(img, img);
+                break;
+            case 2:
+                toolkit::mean_filter_5x5(img, img);
+                break;
+            case 3:
+                toolkit::median_filter_3x3(img, img);
+                break;
+            case 4:
+                toolkit::median_filter_5x5(img, img);
+                break;
+            case 5:
+                toolkit::gaussian_filter_3x3(img, img);
+                break;
+            case 6:
+                toolkit::gaussian_filter_5x5(img, img);
+                break;
+            case 7:
+                toolkit::bm3d_filter(img,img, (float)this->MSE_after/31);
                 break;
             default:
                 break;
         }
         //If the action wasn't changeCurrentImage, save the new image and compute score
-        if (actionID >= 0 && actionID < 6){
+        if (actionID >= 1 && actionID <= 7){
             Toolchain_denoise::setData_Image(img);
             Toolchain_denoise::compute_score_filter(img);
         }
@@ -197,7 +200,7 @@ void Toolchain_denoise::denoise_data_test(const Environment& env, const TPG::TPG
     if(!wf) {
         cout << "Cannot open file !" << endl;
     }
-    String info;
+    string info;
 
     TPG::TPGExecutionEngine tee(env, NULL);
 

@@ -8,10 +8,11 @@
 #include <opencv4/opencv2/highgui.hpp>
 #include <opencv4/opencv2/quality/qualitymse.hpp>
 #include <opencv4/opencv2/quality/qualitypsnr.hpp>
+#include <opencv4/opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/xphoto.hpp>
 #include "cifar/cifar10_reader.hpp"
 
 using namespace std;
-using namespace cv;
 
 #define NB_BYTE_CHAN 1024
 
@@ -29,15 +30,17 @@ namespace toolkit {
 
     void gaussian_filter_5x5(vector<double>& in_img,vector<double>& out_img);
 
-    double mse_compute_v1(const Mat &img, const Mat &noisy);
+    void bm3d_filter(vector<double>& in_img,vector<double>& out_img, float filter_strength);
+
+    double mse_compute_v1(const cv::Mat &img, const cv::Mat &noisy);
 
     double MSE_compute(const vector<double>& img,const vector<double>& noisy_img);
 
     double PSNR_compute(const vector<double>& img,const vector<double>& noisy_img);
 
-    void bin_to_Mat(const vector<double>& in_bin_img, Mat& out_img);
+    void bin_to_Mat(const vector<double>& in_bin_img, cv::Mat& out_img);
 
-    void Mat_to_bin(const Mat& img_in,vector<double> & out_bin_img);
+    void Mat_to_bin(const cv::Mat& img_in,vector<double> & out_bin_img);
 
     bool save_Image(const vector<double> & img_in, u_int64_t index);
 
