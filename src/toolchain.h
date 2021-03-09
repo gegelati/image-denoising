@@ -9,7 +9,7 @@
 #include "cifar/cifar10_reader.hpp"
 
 /**
-* LearningEnvironment to train an agent to denoise the CIFAR-10 database.
+* \brief LearningEnvironment to train an agent to denoise the CIFAR-10 database.
 */
 class Toolchain_denoise : public Learn::LearningEnvironment {
 protected:
@@ -48,27 +48,21 @@ protected:
 	* \brief Change the image currently available in the dataSources of the LearningEnvironment.
 	*
 	* A random image from the dataset for the current mode is selected.
-	*
 	*/
 	void changeCurrentImage();
 
     /**
     * \brief Get the data from the image currently selected
-    *
-    *
     */
 	void getData_Image(std::vector<double>& img) const;
 
     /**
     * \brief Set the data from the image currently selected
-    *
-    *
     */
     void setData_Image(std::vector<double>& img);
 
     /**
      * \brief Compute the score of the previous filtering
-     *
      */
     void compute_score_filter(const std::vector<double> &img_after);
 
@@ -98,13 +92,13 @@ public:
 	virtual LearningEnvironment* clone() const;
 
 	/**
-	* Get the score of the current evaluation session (i.e. since the last reset).
+	* \brief Get the score of the current evaluation session (i.e. since the last reset).
 	*
 	* For the CIFAR-10 LearningEnvironment, the score is computed as follows:
-	* - Score is incremented by 1.0 for a smaller value of the MSE (good job).
-	* - Score is decremented by 0.25 for a higher value of the MSE.
-	* - Score is left unchanged for action ID 7 which corresponds to an
-	*   change of image.
+	* - Score is incremented or decremented by the calculation of Score += MSE_before - MSE_after
+	* (MSE_before -> before the filtering, MSE_after -> after the filtering)
+	* - Score is left unchanged for action ID 0 which corresponds to an
+	*   change of image or if the number max of filtering is reach.
 	*
 	* To be used in a viable learning process, score can be compared only on
 	* agent evaluated on the same number of samples.
@@ -120,7 +114,7 @@ public:
 	virtual bool isTerminal() const override;
 
 	/**
-	* \brief Function printing the statistics of the classification.
+	* \brief Function filtering the CIFAR-10's TESTING dataset and printing/saving the result
 	*
 	* \param[in] result the Map containing the list of roots within a TPGGraph,
 	* with their score in ascending order.
