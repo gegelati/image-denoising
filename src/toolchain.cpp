@@ -2,7 +2,7 @@
 #include <inttypes.h>
 
 #include "toolchain.h"
-#include "toolkit_filter.h"
+#include "toolbox_filter.h"
 
 cifar::CIFAR10_dataset<std::vector, std::vector<double>, uint8_t> Toolchain_denoise::dataset(cifar::read_dataset<std::vector, std::vector, double, uint8_t>(CIFAR_10_DATA_LOCATION));
 cifar::CIFAR10_dataset<std::vector, std::vector<double>, uint8_t> Toolchain_denoise::noisy_dataset(cifar::read_dataset<std::vector, std::vector, double, uint8_t>(NOISY_CIFAR_10_DATA_LOCATION));
@@ -37,7 +37,7 @@ void Toolchain_denoise::changeCurrentImage()
         if(this->currentIndex >= 0){
             vector<double> img_saved(32*32*3);
             Toolchain_denoise::getData_Image(img_saved);
-            toolkit::save_Image(img_saved, this->currentIndex);
+            toolbox::save_Image(img_saved, this->currentIndex);
         }
 		// If the mode is TESTING, just go to the next image
 		this->currentIndex = (this->currentIndex + 1) % dataSource.size();
@@ -51,7 +51,7 @@ void Toolchain_denoise::changeCurrentImage()
     this->img_before = dataSource[this->currentIndex];
 
 	//Compute MSE, normally they are equals
-    this->MSE_after = this->MSE_before = toolkit::MSE_compute(dataSource[currentIndex], (this->img_before));
+    this->MSE_after = this->MSE_before = toolbox::MSE_compute(dataSource[currentIndex], (this->img_before));
 
 }
 
@@ -96,25 +96,25 @@ void Toolchain_denoise::doAction(uint64_t actionID)
                 this->nb_action_filtering = 0;
                 break;
             case 1:
-                toolkit::mean_filter_3x3(img, img);
+                toolbox::mean_filter_3x3(img, img);
                 break;
             case 2:
-                toolkit::mean_filter_5x5(img, img);
+                toolbox::mean_filter_5x5(img, img);
                 break;
             case 3:
-                toolkit::median_filter_3x3(img, img);
+                toolbox::median_filter_3x3(img, img);
                 break;
             case 4:
-                toolkit::median_filter_5x5(img, img);
+                toolbox::median_filter_5x5(img, img);
                 break;
             case 5:
-                toolkit::gaussian_filter_3x3(img, img);
+                toolbox::gaussian_filter_3x3(img, img);
                 break;
             case 6:
-                toolkit::gaussian_filter_5x5(img, img);
+                toolbox::gaussian_filter_5x5(img, img);
                 break;
             case 7:
-                toolkit::bm3d_filter(img,img, (float)this->MSE_after/31);
+                toolbox::bm3d_filter(img, img, (float)this->MSE_after / 31);
                 break;
             default:
                 break;
@@ -135,8 +135,8 @@ void Toolchain_denoise::compute_score_filter(const std::vector<double> & img_aft
 
 
     //Compute MSE of the current image after the action and the image before
-    this->MSE_after = toolkit::MSE_compute(dataSource[currentIndex],img_after);
-    this->MSE_before = toolkit::MSE_compute(dataSource[currentIndex], this->img_before);
+    this->MSE_after = toolbox::MSE_compute(dataSource[currentIndex], img_after);
+    this->MSE_before = toolbox::MSE_compute(dataSource[currentIndex], this->img_before);
 
     this->global_reward += (this->MSE_before - this->MSE_after)/1000;
 

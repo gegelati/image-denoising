@@ -45,6 +45,8 @@ Thumbs.db
 **/lib/
 **/dat/cifar-10/
 **/dat/noise_dataset
+**/dat/.vscode
+**/dat/Noise_dataset_recap.txt
 
 # CLion generated files
 **/.idea/

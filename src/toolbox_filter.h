@@ -18,10 +18,10 @@ using namespace std;
 
 /**
  * \brief Contains the filtering actions used by the toolchain and other functions for image management.
- * The filters present in the toolkit are very basic (mean, median, gaussian) with 1 a little more complex the bm3d
+ * The filters present in the toolbox are very basic (mean, median, gaussian) with 1 a little more complex the bm3d
  * It contains also function to convert image in vector, to save images and to compute MSE and PSNR for noise calcultion
  */
-namespace toolkit {
+namespace toolbox {
 
     void mean_filter_3x3(vector<double>& in_img,vector<double>& out_img);
 
