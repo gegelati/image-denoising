@@ -17,7 +17,7 @@
 #define GAUSSIAN_BLUR_RATIO 0.25 ///Ratio that determines the size of the kernel (based on the size of an image) for blurring an image (0 to 1)
 #define QUALITY_JPEG 10       /// Quality (0 to 100) setting for JPEG compression
 #define SUPERRESOLUTION_DOWN 0.25 ///Ratio for downsampling and upsampling an image to add superresoltion noise (0 to 1)
-#define BERNOUILLI_AMOUNT 0.5 ///Amount of black and white pixel (0 to 1) for Bernouilli noise (salt and pepper)   
+#define BERNOUILLI_AMOUNT 0.10 ///Amount of black and white pixel (0 to 1) for Bernouilli noise (salt and pepper)   
 
 
 #define NB_BYTE_CHAN 1024   /// Number of bytes in a single channel 

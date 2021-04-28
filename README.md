@@ -11,6 +11,7 @@ To run this toolchain you will need to install and compile GEGELATI library. See
 ALso, to run this toolchain you will need to install and compile OpenCV library. (Run these following commands in a command prompt)
 ### To compile OpenCV you will need a C++ compiler and Cmake
 Install minimal prerequisites (Ubuntu 18.04 as reference)
+
     sudo apt update && sudo apt install -y cmake g++ wget unzip
 ### Download and unpack sources
     wget -O opencv.zip https://github.com/opencv/opencv/archive/master.zip

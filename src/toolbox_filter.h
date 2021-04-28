@@ -8,6 +8,7 @@
 #include <opencv4/opencv2/highgui.hpp>
 #include <opencv4/opencv2/quality/qualitymse.hpp>
 #include <opencv4/opencv2/quality/qualitypsnr.hpp>
+#include <opencv4/opencv2/quality/qualityssim.hpp>
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/xphoto.hpp>
 #include "cifar/cifar10_reader.hpp"
@@ -42,6 +43,8 @@ namespace toolbox {
     double MSE_compute(const vector<double>& img,const vector<double>& noisy_img);
 
     double PSNR_compute(const vector<double>& img,const vector<double>& noisy_img);
+
+    double SSIM_compute(const vector<double>& img,const vector<double>& noisy_img);
 
     void bin_to_Mat(const vector<double>& in_bin_img, cv::Mat& out_img);
 

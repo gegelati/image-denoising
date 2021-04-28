@@ -110,6 +110,19 @@ double toolbox::PSNR_compute(const vector<double>& img, const vector<double>& no
     return psnr[0];
 }
 
+double SSIM_compute(const vector<double>& img,const vector<double>& noisy_img){
+    //Creating 2 images 32 * 32 with 3 channels
+    cv::Mat img_mat(32,32,CV_8UC3);
+    cv::Mat noisy_img_mat(32,32,CV_8UC3);
+    toolbox::bin_to_Mat(img, img_mat);
+    toolbox::bin_to_Mat(noisy_img, noisy_img_mat);
+
+    cv::Scalar ssim;
+    //Calculation of SSIM
+    ssim = cv::quality::QualitySSIM::compute(img_mat,noisy_img_mat,cv::noArray());
+    return ssim[0];
+}
+
 void toolbox::bin_to_Mat(const vector<double>& in_bin_img, cv::Mat& out_img){
     for (int chan = 0; chan <3 ; chan++){//three channels
         int x = 0,y =0;

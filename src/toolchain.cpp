@@ -55,7 +55,7 @@ void Toolchain_denoise::changeCurrentImage()
 
 }
 
-Toolchain_denoise::Toolchain_denoise() : LearningEnvironment(8), currentImage(32 * 3, 32 ),img_before(32*32*3),nb_action_filtering(0),global_reward(0)
+Toolchain_denoise::Toolchain_denoise() : LearningEnvironment(10), currentImage(32 * 3, 32 ),img_before(32*32*3),nb_action_filtering(0),global_reward(0)
 {
 	// Fill shared dataset dataset(mnist::read_dataset<std::vector, std::vector, double, uint8_t>(MNIST_DATA_LOCATION))
 	if (Toolchain_denoise::dataset.training_labels.size() != 0) {
@@ -114,13 +114,19 @@ void Toolchain_denoise::doAction(uint64_t actionID)
                 toolbox::gaussian_filter_5x5(img, img);
                 break;
             case 7:
-                toolbox::bm3d_filter(img, img, (float)this->MSE_after / 31);
+                toolbox::bm3d_filter(img, img, 25.0);
+                break;
+            case 8:
+                toolbox::bm3d_filter(img, img, 50.0);
+                break;
+            case 9:
+                toolbox::bm3d_filter(img, img, 75.0);
                 break;
             default:
                 break;
         }
         //If the action wasn't changeCurrentImage, save the new image and compute score
-        if (actionID >= 1 && actionID <= 7){
+        if (actionID >= 1){
             Toolchain_denoise::setData_Image(img);
             Toolchain_denoise::compute_score_filter(img);
         }
